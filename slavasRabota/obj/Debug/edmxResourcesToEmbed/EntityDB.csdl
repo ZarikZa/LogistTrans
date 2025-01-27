@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LogisTransModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Clients">
+    <Key>
+      <PropertyRef Name="ID_Client" />
+    </Key>
+    <Property Name="ID_Client" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ClientName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ClientSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ClientMiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="INN" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Client_I__3F466844" FromRole="Clients" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Drivers">
+    <Key>
+      <PropertyRef Name="ID_Drivers" />
+    </Key>
+    <Property Name="ID_Drivers" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DriverName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DriverSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DriverMiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DriverLecence" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Transport" Relationship="Self.FK__Transport__Drive__4AB81AF0" FromRole="Drivers" ToRole="Transport" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PassWordd" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+  </EntityType>
+  <EntityType Name="Orders">
+    <Key>
+      <PropertyRef Name="ID_Order" />
+    </Key>
+    <Property Name="ID_Order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Client_ID" Type="Int32" Nullable="false" />
+    <Property Name="GruzName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="GruzWeight" Type="Int32" />
+    <Property Name="DateOtpravki" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="DateDostavki" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="OrderStatus_ID" Type="Int32" Nullable="false" />
+    <Property Name="Storage_ID" Type="Int32" Nullable="false" />
+    <Property Name="SumOplati" Type="Decimal" Precision="10" Scale="2" />
+    <NavigationProperty Name="Clients" Relationship="Self.FK__Orders__Client_I__3F466844" FromRole="Orders" ToRole="Clients" />
+    <NavigationProperty Name="OrderStatuses" Relationship="Self.FK__Orders__OrderSta__403A8C7D" FromRole="Orders" ToRole="OrderStatuses" />
+    <NavigationProperty Name="Storage" Relationship="Self.FK__Orders__Storage___412EB0B6" FromRole="Orders" ToRole="Storage" />
+    <NavigationProperty Name="Routess" Relationship="Self.FK__Routess__Order_I__5165187F" FromRole="Orders" ToRole="Routess" />
+  </EntityType>
+  <EntityType Name="OrderStatuses">
+    <Key>
+      <PropertyRef Name="ID_OrderStatus" />
+    </Key>
+    <Property Name="ID_OrderStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__OrderSta__403A8C7D" FromRole="OrderStatuses" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="ID_Role" />
+    </Key>
+    <Property Name="ID_Role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Sotrudnikis" Relationship="Self.FK__Sotrudnik__Role___59FA5E80" FromRole="Roles" ToRole="Sotrudnikis" />
+  </EntityType>
+  <EntityType Name="Routess">
+    <Key>
+      <PropertyRef Name="ID_Route" />
+    </Key>
+    <Property Name="ID_Route" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Order_ID" Type="Int32" Nullable="false" />
+    <Property Name="Otpravlenie" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Dostavka" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Protyajonnost" Type="Int32" />
+    <Property Name="Transport_ID" Type="Int32" Nullable="false" />
+    <Property Name="RouteStatus_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Routess__Order_I__5165187F" FromRole="Routess" ToRole="Orders" />
+    <NavigationProperty Name="RouteStatuses" Relationship="Self.FK__Routess__RouteSt__534D60F1" FromRole="Routess" ToRole="RouteStatuses" />
+    <NavigationProperty Name="Transport" Relationship="Self.FK__Routess__Transpo__52593CB8" FromRole="Routess" ToRole="Transport" />
+  </EntityType>
+  <EntityType Name="RouteStatuses">
+    <Key>
+      <PropertyRef Name="ID_RouteStatus" />
+    </Key>
+    <Property Name="ID_RouteStatus" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RouteStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Routess" Relationship="Self.FK__Routess__RouteSt__534D60F1" FromRole="RouteStatuses" ToRole="Routess" />
+  </EntityType>
+  <EntityType Name="Sotrudnikis">
+    <Key>
+      <PropertyRef Name="ID_Sotrudnik" />
+    </Key>
+    <Property Name="ID_Sotrudnik" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SotrudnikName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SotrudnikSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SotrudnikMiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Loginn" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Passwordd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Role_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Roles" Relationship="Self.FK__Sotrudnik__Role___59FA5E80" FromRole="Sotrudnikis" ToRole="Roles" />
+  </EntityType>
+  <EntityType Name="Storage">
+    <Key>
+      <PropertyRef Name="ID_Storage" />
+    </Key>
+    <Property Name="ID_Storage" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StorageLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ColvoGruzInStorage" Type="Int32" Nullable="false" />
+    <Property Name="DostupMesto" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Storage___412EB0B6" FromRole="Storage" ToRole="Orders" />
+  </EntityType>
+  <EntityType Name="Transport">
+    <Key>
+      <PropertyRef Name="ID_Transport" />
+    </Key>
+    <Property Name="ID_Transport" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CarNomber" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+    <Property Name="Driver_ID" Type="Int32" Nullable="false" />
+    <Property Name="Vmestimost" Type="Int32" />
+    <Property Name="Sostoyanie_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Drivers" Relationship="Self.FK__Transport__Drive__4AB81AF0" FromRole="Transport" ToRole="Drivers" />
+    <NavigationProperty Name="Routess" Relationship="Self.FK__Routess__Transpo__52593CB8" FromRole="Transport" ToRole="Routess" />
+    <NavigationProperty Name="TransportSostoyanie" Relationship="Self.FK__Transport__Sosto__4BAC3F29" FromRole="Transport" ToRole="TransportSostoyanie" />
+  </EntityType>
+  <EntityType Name="TransportSostoyanie">
+    <Key>
+      <PropertyRef Name="ID_TransportSostoyanie" />
+    </Key>
+    <Property Name="ID_TransportSostoyanie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SostoyanieTransport" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Transport" Relationship="Self.FK__Transport__Sosto__4BAC3F29" FromRole="TransportSostoyanie" ToRole="Transport" />
+  </EntityType>
+  <Association Name="FK__Orders__Client_I__3F466844">
+    <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clients">
+        <PropertyRef Name="ID_Client" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Client_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transport__Drive__4AB81AF0">
+    <End Role="Drivers" Type="Self.Drivers" Multiplicity="1" />
+    <End Role="Transport" Type="Self.Transport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Drivers">
+        <PropertyRef Name="ID_Drivers" />
+      </Principal>
+      <Dependent Role="Transport">
+        <PropertyRef Name="Driver_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__OrderSta__403A8C7D">
+    <End Role="OrderStatuses" Type="Self.OrderStatuses" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="OrderStatuses">
+        <PropertyRef Name="ID_OrderStatus" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="OrderStatus_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Orders__Storage___412EB0B6">
+    <End Role="Storage" Type="Self.Storage" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Storage">
+        <PropertyRef Name="ID_Storage" />
+      </Principal>
+      <Dependent Role="Orders">
+        <PropertyRef Name="Storage_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Routess__Order_I__5165187F">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+    <End Role="Routess" Type="Self.Routess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="ID_Order" />
+      </Principal>
+      <Dependent Role="Routess">
+        <PropertyRef Name="Order_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Sotrudnik__Role___59FA5E80">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="Sotrudnikis" Type="Self.Sotrudnikis" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="ID_Role" />
+      </Principal>
+      <Dependent Role="Sotrudnikis">
+        <PropertyRef Name="Role_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Routess__RouteSt__534D60F1">
+    <End Role="RouteStatuses" Type="Self.RouteStatuses" Multiplicity="1" />
+    <End Role="Routess" Type="Self.Routess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RouteStatuses">
+        <PropertyRef Name="ID_RouteStatus" />
+      </Principal>
+      <Dependent Role="Routess">
+        <PropertyRef Name="RouteStatus_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Routess__Transpo__52593CB8">
+    <End Role="Transport" Type="Self.Transport" Multiplicity="1" />
+    <End Role="Routess" Type="Self.Routess" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Transport">
+        <PropertyRef Name="ID_Transport" />
+      </Principal>
+      <Dependent Role="Routess">
+        <PropertyRef Name="Transport_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Transport__Sosto__4BAC3F29">
+    <End Role="TransportSostoyanie" Type="Self.TransportSostoyanie" Multiplicity="1" />
+    <End Role="Transport" Type="Self.Transport" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TransportSostoyanie">
+        <PropertyRef Name="ID_TransportSostoyanie" />
+      </Principal>
+      <Dependent Role="Transport">
+        <PropertyRef Name="Sostoyanie_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LogisTransEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Clients" EntityType="Self.Clients" />
+    <EntitySet Name="Drivers" EntityType="Self.Drivers" />
+    <EntitySet Name="Orders" EntityType="Self.Orders" />
+    <EntitySet Name="OrderStatuses" EntityType="Self.OrderStatuses" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" />
+    <EntitySet Name="Routess" EntityType="Self.Routess" />
+    <EntitySet Name="RouteStatuses" EntityType="Self.RouteStatuses" />
+    <EntitySet Name="Sotrudnikis" EntityType="Self.Sotrudnikis" />
+    <EntitySet Name="Storage" EntityType="Self.Storage" />
+    <EntitySet Name="Transport" EntityType="Self.Transport" />
+    <EntitySet Name="TransportSostoyanie" EntityType="Self.TransportSostoyanie" />
+    <AssociationSet Name="FK__Orders__Client_I__3F466844" Association="Self.FK__Orders__Client_I__3F466844">
+      <End Role="Clients" EntitySet="Clients" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transport__Drive__4AB81AF0" Association="Self.FK__Transport__Drive__4AB81AF0">
+      <End Role="Drivers" EntitySet="Drivers" />
+      <End Role="Transport" EntitySet="Transport" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__OrderSta__403A8C7D" Association="Self.FK__Orders__OrderSta__403A8C7D">
+      <End Role="OrderStatuses" EntitySet="OrderStatuses" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Orders__Storage___412EB0B6" Association="Self.FK__Orders__Storage___412EB0B6">
+      <End Role="Storage" EntitySet="Storage" />
+      <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Routess__Order_I__5165187F" Association="Self.FK__Routess__Order_I__5165187F">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="Routess" EntitySet="Routess" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Sotrudnik__Role___59FA5E80" Association="Self.FK__Sotrudnik__Role___59FA5E80">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Sotrudnikis" EntitySet="Sotrudnikis" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Routess__RouteSt__534D60F1" Association="Self.FK__Routess__RouteSt__534D60F1">
+      <End Role="RouteStatuses" EntitySet="RouteStatuses" />
+      <End Role="Routess" EntitySet="Routess" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Routess__Transpo__52593CB8" Association="Self.FK__Routess__Transpo__52593CB8">
+      <End Role="Transport" EntitySet="Transport" />
+      <End Role="Routess" EntitySet="Routess" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Transport__Sosto__4BAC3F29" Association="Self.FK__Transport__Sosto__4BAC3F29">
+      <End Role="TransportSostoyanie" EntitySet="TransportSostoyanie" />
+      <End Role="Transport" EntitySet="Transport" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

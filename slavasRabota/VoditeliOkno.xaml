@@ -1,0 +1,40 @@
+﻿<Window x:Class="slavasRabota.VoditeliOkno"
+        xmlns:mat="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:slavasRabota"
+        mc:Ignorable="d"
+        Title="VoditeliOkno" 
+        Background="#3D3D3D"
+        WindowState="Maximized"
+        Height="850" Width="1500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="5*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0.1*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Водитель" Grid.ColumnSpan="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Times New Roman" FontSize="48"/>
+        <Button x:Name="ExitBtm" Content="Выход" Height="60" FontSize="30" Foreground="White" FontFamily="Times New Roman" Grid.Column="1" Click="ExitBtm_Click"/>
+        <DataGrid x:Name="MarshrutsDG" FontSize="20" Grid.Row="1" Grid.ColumnSpan="2" Background="#B6B6B6" AutoGenerateColumns="False" IsReadOnly="True" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Orders.GruzName}" Header="Название груза"/>
+                <DataGridTextColumn Binding="{Binding Orders.GruzWeight}" Header="Вес груза"/>
+                <DataGridTextColumn Binding="{Binding Orders.DateOtpravki}" Header="Дата отправки"/>
+                <DataGridTextColumn Binding="{Binding Orders.DateDostavki}" Header="Дата доставки"/>
+                <DataGridTextColumn Binding="{Binding Otpravlenie}" Header="Адрес отправления"/>
+                <DataGridTextColumn Binding="{Binding Dostavka}" Header="Адрес доставки"/>
+                <DataGridTextColumn Binding="{Binding Protyajonnost}" Header="Протяжённость в км"/>
+                <DataGridTextColumn Binding="{Binding Transport.CarNomber}" Header="Номер машины"/>
+                <DataGridTextColumn Binding="{Binding RouteStatuses.RouteStatus}" Header="Статус"/>
+                <DataGridTextColumn Binding="{Binding Orders.SumOplati}" Header="Оплата"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

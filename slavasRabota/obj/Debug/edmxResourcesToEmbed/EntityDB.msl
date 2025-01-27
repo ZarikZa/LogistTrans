@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище LogisTransModelContainer" CdmEntityContainer="LogisTransEntities1">
+    <EntitySetMapping Name="Clients">
+      <EntityTypeMapping TypeName="LogisTransModel.Clients">
+        <MappingFragment StoreEntitySet="Clients">
+          <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+          <ScalarProperty Name="ClientName" ColumnName="ClientName" />
+          <ScalarProperty Name="ClientSurname" ColumnName="ClientSurname" />
+          <ScalarProperty Name="ClientMiddleName" ColumnName="ClientMiddleName" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="INN" ColumnName="INN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Drivers">
+      <EntityTypeMapping TypeName="LogisTransModel.Drivers">
+        <MappingFragment StoreEntitySet="Drivers">
+          <ScalarProperty Name="PassWordd" ColumnName="PassWordd" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="ID_Drivers" ColumnName="ID_Drivers" />
+          <ScalarProperty Name="DriverName" ColumnName="DriverName" />
+          <ScalarProperty Name="DriverSurname" ColumnName="DriverSurname" />
+          <ScalarProperty Name="DriverMiddleName" ColumnName="DriverMiddleName" />
+          <ScalarProperty Name="DriverLecence" ColumnName="DriverLecence" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Orders">
+      <EntityTypeMapping TypeName="LogisTransModel.Orders">
+        <MappingFragment StoreEntitySet="Orders">
+          <ScalarProperty Name="ID_Order" ColumnName="ID_Order" />
+          <ScalarProperty Name="Client_ID" ColumnName="Client_ID" />
+          <ScalarProperty Name="GruzName" ColumnName="GruzName" />
+          <ScalarProperty Name="GruzWeight" ColumnName="GruzWeight" />
+          <ScalarProperty Name="DateOtpravki" ColumnName="DateOtpravki" />
+          <ScalarProperty Name="DateDostavki" ColumnName="DateDostavki" />
+          <ScalarProperty Name="OrderStatus_ID" ColumnName="OrderStatus_ID" />
+          <ScalarProperty Name="Storage_ID" ColumnName="Storage_ID" />
+          <ScalarProperty Name="SumOplati" ColumnName="SumOplati" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderStatuses">
+      <EntityTypeMapping TypeName="LogisTransModel.OrderStatuses">
+        <MappingFragment StoreEntitySet="OrderStatuses">
+          <ScalarProperty Name="ID_OrderStatus" ColumnName="ID_OrderStatus" />
+          <ScalarProperty Name="OrderStatus" ColumnName="OrderStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="LogisTransModel.Roles">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="ID_Role" ColumnName="ID_Role" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Routess">
+      <EntityTypeMapping TypeName="LogisTransModel.Routess">
+        <MappingFragment StoreEntitySet="Routess">
+          <ScalarProperty Name="ID_Route" ColumnName="ID_Route" />
+          <ScalarProperty Name="Order_ID" ColumnName="Order_ID" />
+          <ScalarProperty Name="Otpravlenie" ColumnName="Otpravlenie" />
+          <ScalarProperty Name="Dostavka" ColumnName="Dostavka" />
+          <ScalarProperty Name="Protyajonnost" ColumnName="Protyajonnost" />
+          <ScalarProperty Name="Transport_ID" ColumnName="Transport_ID" />
+          <ScalarProperty Name="RouteStatus_ID" ColumnName="RouteStatus_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RouteStatuses">
+      <EntityTypeMapping TypeName="LogisTransModel.RouteStatuses">
+        <MappingFragment StoreEntitySet="RouteStatuses">
+          <ScalarProperty Name="ID_RouteStatus" ColumnName="ID_RouteStatus" />
+          <ScalarProperty Name="RouteStatus" ColumnName="RouteStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sotrudnikis">
+      <EntityTypeMapping TypeName="LogisTransModel.Sotrudnikis">
+        <MappingFragment StoreEntitySet="Sotrudnikis">
+          <ScalarProperty Name="ID_Sotrudnik" ColumnName="ID_Sotrudnik" />
+          <ScalarProperty Name="SotrudnikName" ColumnName="SotrudnikName" />
+          <ScalarProperty Name="SotrudnikSurname" ColumnName="SotrudnikSurname" />
+          <ScalarProperty Name="SotrudnikMiddleName" ColumnName="SotrudnikMiddleName" />
+          <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+          <ScalarProperty Name="Loginn" ColumnName="Loginn" />
+          <ScalarProperty Name="Passwordd" ColumnName="Passwordd" />
+          <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Storage">
+      <EntityTypeMapping TypeName="LogisTransModel.Storage">
+        <MappingFragment StoreEntitySet="Storage">
+          <ScalarProperty Name="ID_Storage" ColumnName="ID_Storage" />
+          <ScalarProperty Name="StorageLocation" ColumnName="StorageLocation" />
+          <ScalarProperty Name="ColvoGruzInStorage" ColumnName="ColvoGruzInStorage" />
+          <ScalarProperty Name="DostupMesto" ColumnName="DostupMesto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Transport">
+      <EntityTypeMapping TypeName="LogisTransModel.Transport">
+        <MappingFragment StoreEntitySet="Transport">
+          <ScalarProperty Name="ID_Transport" ColumnName="ID_Transport" />
+          <ScalarProperty Name="CarNomber" ColumnName="CarNomber" />
+          <ScalarProperty Name="Driver_ID" ColumnName="Driver_ID" />
+          <ScalarProperty Name="Vmestimost" ColumnName="Vmestimost" />
+          <ScalarProperty Name="Sostoyanie_ID" ColumnName="Sostoyanie_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TransportSostoyanie">
+      <EntityTypeMapping TypeName="LogisTransModel.TransportSostoyanie">
+        <MappingFragment StoreEntitySet="TransportSostoyanie">
+          <ScalarProperty Name="ID_TransportSostoyanie" ColumnName="ID_TransportSostoyanie" />
+          <ScalarProperty Name="SostoyanieTransport" ColumnName="SostoyanieTransport" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

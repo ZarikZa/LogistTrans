@@ -1,0 +1,63 @@
+﻿<Page x:Class="slavasRabota.Marshruts"
+      xmlns:mat="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:slavasRabota"
+      mc:Ignorable="d" 
+      d:DesignHeight="850" d:DesignWidth="1500"
+      Title="Marshruts">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="MarshrutsDG" Background="#B6B6B6" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="MarshrutsDG_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Orders.GruzName}" Header="Название груза"/>
+                <DataGridTextColumn Binding="{Binding Orders.GruzWeight}" Header="Вес груза"/>
+                <DataGridTextColumn Binding="{Binding Orders.DateOtpravki}" Header="Дата отправки"/>
+                <DataGridTextColumn Binding="{Binding Orders.DateDostavki}" Header="Дата доставки"/>
+                <DataGridTextColumn Binding="{Binding Otpravlenie}" Header="Адрес отправления"/>
+                <DataGridTextColumn Binding="{Binding Dostavka}" Header="Адрес доставки"/>
+                <DataGridTextColumn Binding="{Binding Protyajonnost}" Header="Протяжённость в км"/>
+                <DataGridTextColumn Binding="{Binding Transport.CarNomber}" Header="Номер машины"/>
+                <DataGridTextColumn Binding="{Binding RouteStatuses.RouteStatus}" Header="Статус"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ComboBox x:Name="OrderCB" mat:HintAssist.Hint="Заказ" Width="350" Height="50" Background="#B6B6B6"  FontFamily="Times New Roman" FontSize="20" Foreground="White"/>
+            <Border CornerRadius="10" Background="#C4C4C4" BorderBrush="#C4C4C4" Height="50" Width="350" Grid.Row="1"  >
+                <TextBox x:Name="OtprovlenieTbx" mat:HintAssist.Hint="Адрес отправления" FontFamily="Times New Roman" FontSize="20" Foreground="White" />
+            </Border>
+            <Border CornerRadius="10" Background="#C4C4C4" BorderBrush="#C4C4C4" Height="50" Width="350" Grid.Row="2"  >
+                <TextBox x:Name="DostavkaTbx" mat:HintAssist.Hint="Адрес доставки" FontFamily="Times New Roman" FontSize="20" Foreground="White" />
+            </Border>
+            <Border CornerRadius="10" Background="#C4C4C4" BorderBrush="#C4C4C4" Height="50" Width="350" Grid.Row="3"  >
+                <TextBox x:Name="ProtiajennostTbx" mat:HintAssist.Hint="Протяжённость маршрута" FontFamily="Times New Roman" FontSize="20" Foreground="White" />
+            </Border>
+            <ComboBox x:Name="TransportCB" mat:HintAssist.Hint="Транспорт" Width="350" Height="50" Background="#B6B6B6" FontFamily="Times New Roman" FontSize="20" Foreground="White" Grid.Row="4"/>
+            <ComboBox x:Name="StatusCB" mat:HintAssist.Hint="Статус" Width="350" Height="50" Background="#B6B6B6" FontFamily="Times New Roman" FontSize="20" Foreground="White" Grid.Row="5"/>
+            <Button x:Name="AddBtm" Content="Добавить" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="10" Height="50" Width="350" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Grid.Row="8" Click="AddBtm_Click" />
+            <Button x:Name="EditBtm" Content="Изменить" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="10" Height="50" Width="350" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Grid.Row="9" Click="EditBtm_Click" />
+            <Button x:Name="bnullBtm" Content="Обнулить поля" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="10" Height="50" Width="350" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Grid.Row="10" Click="bnullBtm_Click" />
+            <Button x:Name="OtchetBtm" Content="Сформировать отчёт" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="10" Height="50" Width="350" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Grid.Row="11" Click="OtchetBtm_Click"/>
+        </Grid>
+    </Grid>
+</Page>

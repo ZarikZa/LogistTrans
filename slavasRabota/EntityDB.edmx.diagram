@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3ed26b1be7db452493c921e7d87f4248" Name="Diagram1" ZoomLevel="69">
+        <EntityTypeShape EntityType="LogisTransModel.Clients" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisTransModel.Drivers" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisTransModel.Orders" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisTransModel.OrderStatuses" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisTransModel.Roles" Width="1.5" PointX="5.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisTransModel.Routess" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisTransModel.RouteStatuses" Width="1.5" PointX="3" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisTransModel.Sotrudnikis" Width="1.5" PointX="8" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisTransModel.Storage" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisTransModel.Transport" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LogisTransModel.TransportSostoyanie" Width="1.5" PointX="0.75" PointY="13.375" IsExpanded="true" />
+        <AssociationConnector Association="LogisTransModel.FK__Orders__Client_I__3F466844" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisTransModel.FK__Transport__Drive__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisTransModel.FK__Orders__OrderSta__403A8C7D" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisTransModel.FK__Orders__Storage___412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisTransModel.FK__Routess__Order_I__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisTransModel.FK__Sotrudnik__Role___59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisTransModel.FK__Routess__RouteSt__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisTransModel.FK__Routess__Transpo__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="LogisTransModel.FK__Transport__Sosto__4BAC3F29" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

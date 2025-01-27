@@ -1,0 +1,54 @@
+﻿<Page x:Class="slavasRabota.TransportPage"
+      xmlns:mat="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:slavasRabota"
+      mc:Ignorable="d" 
+      d:DesignHeight="850" d:DesignWidth="1500"
+      Title="TransportPage">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="TransportDG" Background="#B6B6B6" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="TransportDG_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding CarNomber}" Header="Номер автомобиля"/>
+                <DataGridTextColumn Binding="{Binding Drivers.DriverName}" Header="Имя водителя"/>
+                <DataGridTextColumn Binding="{Binding Drivers.DriverSurname}" Header="Фамилия водителя"/>
+                <DataGridTextColumn Binding="{Binding Drivers.DriverLecence}" Header="Лицензия водителя"/>
+                <DataGridTextColumn Binding="{Binding Vmestimost}" Header="Вместимость автомобиля"/>
+                <DataGridTextColumn Binding="{Binding TransportSostoyanie.SostoyanieTransport}" Header="Состояние транспорта"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border CornerRadius="10" Background="#C4C4C4" BorderBrush="#C4C4C4" Height="50" Width="350" Grid.Row="0"  >
+                <TextBox x:Name="CarNomberTbx"  mat:HintAssist.Hint="Номер машины" FontFamily="Times New Roman" FontSize="20" Foreground="White" />
+            </Border>
+            <ComboBox x:Name="VoditelCB" Grid.Row="1" mat:HintAssist.Hint="Водитель" Width="350" Height="50" Background="#B6B6B6" FontFamily="Times New Roman" FontSize="20" Foreground="White"/>
+            <Border CornerRadius="10" Background="#C4C4C4" BorderBrush="#C4C4C4" Height="50" Width="350" Grid.Row="2">
+                <TextBox x:Name="VmestimostTbx" mat:HintAssist.Hint="Вместимость" FontFamily="Times New Roman" FontSize="20" Foreground="White" />
+            </Border>
+            <ComboBox x:Name="SostoyanieCB" mat:HintAssist.Hint="Статус" Width="350" Height="50" Background="#B6B6B6" FontFamily="Times New Roman" FontSize="20" Foreground="White" Grid.Row="3"/>
+            <Button x:Name="AddBtm" Content="Добавить" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="10" Height="50" Width="350" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Grid.Row="7" Click="AddBtm_Click" />
+            <Button x:Name="EditBtm" Content="Изменить" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="10" Height="50" Width="350" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Grid.Row="8" Click="EditBtm_Click" />
+            <Button x:Name="DeleteBtm" Content="Удалить" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="10" Height="50" Width="350" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Grid.Row="9" Click="DeleteBtm_Click"  />
+            <Button x:Name="bnullBtm" Content="Обнулить поля" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="10" Height="50" Width="350" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Grid.Row="10" Click="bnullBtm_Click" />
+        </Grid>
+    </Grid>
+</Page>
