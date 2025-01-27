@@ -45,7 +45,7 @@ namespace slavasRabota
         {
             if (ves.Length != 12)
             {
-                return false ;
+                return false;
             }
             for (int i = 0; i < ves.Length; i++)
             {
@@ -129,7 +129,7 @@ namespace slavasRabota
                 }
                 else
                 {
-                    MessageBox.Show("Лицензия должна состоять из цифр и быть больше 12 символов");
+                    MessageBox.Show("Лицензия должна состоять из цифр","И больше 12 символов");
                 }
             }
             else

@@ -35,7 +35,18 @@ namespace slavasRabota
         public Zakazi()
         {
             InitializeComponent();
-            Zakazs.ItemsSource = context.Orders.ToList();
+            List<Orders> orders = new List<Orders>();
+            foreach (Orders order in context.Orders)
+            {
+                if (order.OrderStatuses.OrderStatus.ToString() != "Завершён")
+                {
+                    if (order.OrderStatuses.OrderStatus.ToString() != "Отменён")
+                    {
+                        orders.Add(order);
+                    }
+                }
+            }
+            Zakazs.ItemsSource = orders;
             ClientCB.ItemsSource = context.Clients.ToList();
             ClientCB.DisplayMemberPath = "CompanyName";
             OrderStatusCB.ItemsSource = context.OrderStatuses.ToList();
@@ -109,7 +120,18 @@ namespace slavasRabota
                                 context.Orders.Add(orders);
                                 context.SaveChanges();
 
-                                Zakazs.ItemsSource = context.Orders.ToList();
+                                List<Orders> orderss = new List<Orders>();
+                                foreach (Orders order in context.Orders)
+                                {
+                                    if (order.OrderStatuses.OrderStatus.ToString() != "Завершён")
+                                    {
+                                        if (order.OrderStatuses.OrderStatus.ToString() != "Отменён")
+                                        {
+                                            orderss.Add(order);
+                                        }
+                                    }
+                                }
+                                Zakazs.ItemsSource = orderss;
 
                                 ClientCB.SelectedItem = null;
                                 OrderStatusCB.SelectedItem = null;
@@ -197,7 +219,18 @@ namespace slavasRabota
                                     selected.SumOplati = Convert.ToDecimal(SumOplatiTbx.Text.Trim());
                                     
                                     context.SaveChanges();
-                                    Zakazs.ItemsSource = context.Orders.ToList();
+                                    List<Orders> orders = new List<Orders>();
+                                    foreach (Orders order in context.Orders)
+                                    {
+                                        if (order.OrderStatuses.OrderStatus.ToString() != "Завершён")
+                                        {
+                                            if(order.OrderStatuses.OrderStatus.ToString() != "Отменён")
+                                            {
+                                                orders.Add(order);
+                                            }
+                                        }
+                                    }
+                                    Zakazs.ItemsSource = orders;
 
                                     ClientCB.SelectedItem = null;
                                     OrderStatusCB.SelectedItem = null;

@@ -13,6 +13,7 @@
           <Property Name="ClientName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ClientSurname" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ClientMiddleName" Type="varchar" MaxLength="50" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
           <Property Name="CompanyName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="PhoneNumber" Type="varchar" MaxLength="12" Nullable="false" />
           <Property Name="INN" Type="varchar" MaxLength="12" Nullable="false" />
@@ -151,7 +152,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Routess__Order_I__5165187F">
+        <Association Name="FK__Routess__Order_I__52593CB8">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="Routess" Type="Self.Routess" Multiplicity="*" />
           <ReferentialConstraint>
@@ -163,7 +164,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Routess__RouteSt__534D60F1">
+        <Association Name="FK__Routess__RouteSt__5441852A">
           <End Role="RouteStatuses" Type="Self.RouteStatuses" Multiplicity="1" />
           <End Role="Routess" Type="Self.Routess" Multiplicity="*" />
           <ReferentialConstraint>
@@ -175,7 +176,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Routess__Transpo__52593CB8">
+        <Association Name="FK__Routess__Transpo__534D60F1">
           <End Role="Transport" Type="Self.Transport" Multiplicity="1" />
           <End Role="Routess" Type="Self.Routess" Multiplicity="*" />
           <ReferentialConstraint>
@@ -187,7 +188,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sotrudnik__Role___59FA5E80">
+        <Association Name="FK__Sotrudnik__Role___5AEE82B9">
           <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
           <End Role="Sotrudnikis" Type="Self.Sotrudnikis" Multiplicity="*" />
           <ReferentialConstraint>
@@ -199,7 +200,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transport__Drive__4AB81AF0">
+        <Association Name="FK__Transport__Drive__4BAC3F29">
           <End Role="Drivers" Type="Self.Drivers" Multiplicity="1" />
           <End Role="Transport" Type="Self.Transport" Multiplicity="*" />
           <ReferentialConstraint>
@@ -211,7 +212,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Transport__Sosto__4BAC3F29">
+        <Association Name="FK__Transport__Sosto__4CA06362">
           <End Role="TransportSostoyanie" Type="Self.TransportSostoyanie" Multiplicity="1" />
           <End Role="Transport" Type="Self.Transport" Multiplicity="*" />
           <ReferentialConstraint>
@@ -247,27 +248,27 @@
             <End Role="Storage" EntitySet="Storage" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK__Routess__Order_I__5165187F" Association="Self.FK__Routess__Order_I__5165187F">
+          <AssociationSet Name="FK__Routess__Order_I__52593CB8" Association="Self.FK__Routess__Order_I__52593CB8">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="Routess" EntitySet="Routess" />
           </AssociationSet>
-          <AssociationSet Name="FK__Routess__RouteSt__534D60F1" Association="Self.FK__Routess__RouteSt__534D60F1">
+          <AssociationSet Name="FK__Routess__RouteSt__5441852A" Association="Self.FK__Routess__RouteSt__5441852A">
             <End Role="RouteStatuses" EntitySet="RouteStatuses" />
             <End Role="Routess" EntitySet="Routess" />
           </AssociationSet>
-          <AssociationSet Name="FK__Routess__Transpo__52593CB8" Association="Self.FK__Routess__Transpo__52593CB8">
+          <AssociationSet Name="FK__Routess__Transpo__534D60F1" Association="Self.FK__Routess__Transpo__534D60F1">
             <End Role="Transport" EntitySet="Transport" />
             <End Role="Routess" EntitySet="Routess" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sotrudnik__Role___59FA5E80" Association="Self.FK__Sotrudnik__Role___59FA5E80">
+          <AssociationSet Name="FK__Sotrudnik__Role___5AEE82B9" Association="Self.FK__Sotrudnik__Role___5AEE82B9">
             <End Role="Roles" EntitySet="Roles" />
             <End Role="Sotrudnikis" EntitySet="Sotrudnikis" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transport__Drive__4AB81AF0" Association="Self.FK__Transport__Drive__4AB81AF0">
+          <AssociationSet Name="FK__Transport__Drive__4BAC3F29" Association="Self.FK__Transport__Drive__4BAC3F29">
             <End Role="Drivers" EntitySet="Drivers" />
             <End Role="Transport" EntitySet="Transport" />
           </AssociationSet>
-          <AssociationSet Name="FK__Transport__Sosto__4BAC3F29" Association="Self.FK__Transport__Sosto__4BAC3F29">
+          <AssociationSet Name="FK__Transport__Sosto__4CA06362" Association="Self.FK__Transport__Sosto__4CA06362">
             <End Role="TransportSostoyanie" EntitySet="TransportSostoyanie" />
             <End Role="Transport" EntitySet="Transport" />
           </AssociationSet>
@@ -288,6 +289,7 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="INN" Type="String" MaxLength="12" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__Client_I__3F466844" FromRole="Clients" ToRole="Orders" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Drivers">
           <Key>
@@ -570,6 +572,7 @@
           <EntitySetMapping Name="Clients">
             <EntityTypeMapping TypeName="LogisTransModel.Clients">
               <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
                 <ScalarProperty Name="ClientName" ColumnName="ClientName" />
                 <ScalarProperty Name="ClientSurname" ColumnName="ClientSurname" />

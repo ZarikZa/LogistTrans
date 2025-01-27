@@ -4,6 +4,7 @@
     <EntitySetMapping Name="Clients">
       <EntityTypeMapping TypeName="LogisTransModel.Clients">
         <MappingFragment StoreEntitySet="Clients">
+          <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
           <ScalarProperty Name="ClientName" ColumnName="ClientName" />
           <ScalarProperty Name="ClientSurname" ColumnName="ClientSurname" />

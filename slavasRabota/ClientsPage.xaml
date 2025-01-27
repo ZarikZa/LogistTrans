@@ -21,6 +21,7 @@
                 <DataGridTextColumn Binding="{Binding CompanyName}" Header="Название компании"/>
                 <DataGridTextColumn Binding="{Binding PhoneNumber}" Header="Номер телефона"/>
                 <DataGridTextColumn Binding="{Binding INN}" Header="ИНН"/>
+                <DataGridTextColumn Binding="{Binding Email}" Header="ИНН"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Column="1">
@@ -54,6 +55,9 @@
             </Border>
             <Border CornerRadius="10" Background="#C4C4C4" BorderBrush="#C4C4C4" Height="50" Width="350" Grid.Row="5" >
                 <TextBox x:Name="INNTbx" mat:HintAssist.Hint="ИНН" FontFamily="Times New Roman" FontSize="20" Foreground="White" />
+            </Border>
+            <Border CornerRadius="10" Background="#C4C4C4" BorderBrush="#C4C4C4" Height="50" Width="350" Grid.Row="6" >
+                <TextBox x:Name="EmailTbx" mat:HintAssist.Hint="Email" FontFamily="Times New Roman" FontSize="20" Foreground="White" />
             </Border>
             <Button x:Name="AddBtm" Content="Добавить" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="10" Height="50" Width="350" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Grid.Row="7" Click="AddBtm_Click"  />
             <Button x:Name="EditBtm" Content="Изменить" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="10" Height="50" Width="350" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Grid.Row="8" Click="EditBtm_Click"/>

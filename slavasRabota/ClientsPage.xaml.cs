@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
+using System.Net;
 using System.Runtime.Remoting.Contexts;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +16,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static MaterialDesignThemes.Wpf.Theme;
+using Spire.Additions.Html;
 
 namespace slavasRabota
 {
@@ -80,10 +85,16 @@ namespace slavasRabota
             return true;
         }
 
+        public static bool IsValidEmailRegex(string email)
+        {
+            string emailRegex = @"^[^\s@]+@[^\s@]+\.[^\s@]+$";
+            return Regex.IsMatch(email, emailRegex);
+        }
+
         private void AddBtm_Click(object sender, RoutedEventArgs e)
         {
             Clients clien = new Clients();
-            if (ClientNameTbx.Text != "" && ClientSurnameTbx.Text != "" && CompanyNameTbx.Text != "" && PhoneNumberTbx.Text != "" && INNTbx.Text != "")
+            if (ClientNameTbx.Text != "" && ClientSurnameTbx.Text != "" && CompanyNameTbx.Text != "" && PhoneNumberTbx.Text != "" && INNTbx.Text != "" && EmailTbx.Text != "")
             {
                 if (ProverkaDigit(INNTbx.Text.Trim()))
                 {
@@ -91,23 +102,32 @@ namespace slavasRabota
                     {
                         if (IsValidPhoneNumberManual(PhoneNumberTbx.Text.Trim()))
                         {
-                            clien.ClientSurname = ClientSurnameTbx.Text.Trim();
-                            clien.ClientName = ClientNameTbx.Text.Trim();
-                            clien.ClientMiddleName = ClientMiddleNameTbx.Text.Trim();
-                            clien.CompanyName = CompanyNameTbx.Text.Trim();
-                            clien.INN = INNTbx.Text.Trim();
-                            clien.PhoneNumber = PhoneNumberTbx.Text.Trim();
+                            if (IsValidEmailRegex(EmailTbx.Text))
+                            {
+                                clien.ClientSurname = ClientSurnameTbx.Text.Trim();
+                                clien.ClientName = ClientNameTbx.Text.Trim();
+                                clien.ClientMiddleName = ClientMiddleNameTbx.Text.Trim();
+                                clien.CompanyName = CompanyNameTbx.Text.Trim();
+                                clien.INN = INNTbx.Text.Trim();
+                                clien.PhoneNumber = PhoneNumberTbx.Text.Trim();
+                                clien.Email = EmailTbx.Text.Trim();
 
-                            context.Clients.Add(clien);
-                            context.SaveChanges();
-                            ClientsDG.ItemsSource = context.Clients.ToList();
+                                context.Clients.Add(clien);
+                                context.SaveChanges();
+                                ClientsDG.ItemsSource = context.Clients.ToList();
 
-                            ClientMiddleNameTbx.Text = "";
-                            ClientNameTbx.Text = "";
-                            ClientSurnameTbx.Text = "";
-                            CompanyNameTbx.Text = "";
-                            INNTbx.Text = "";
-                            PhoneNumberTbx.Text = "";
+                                ClientMiddleNameTbx.Text = "";
+                                ClientNameTbx.Text = "";
+                                ClientSurnameTbx.Text = "";
+                                CompanyNameTbx.Text = "";
+                                INNTbx.Text = "";
+                                PhoneNumberTbx.Text = "";
+                                EmailTbx.Text = "";
+                            }
+                            else
+                            {
+                                MessageBox.Show("Почта введена не верно введён неверно");
+                            }
                         }
                         else
                         {
@@ -141,22 +161,30 @@ namespace slavasRabota
                     {
                         if (IsValidPhoneNumberManual(PhoneNumberTbx.Text.Trim()))
                         {
-                            selected.ClientSurname = ClientSurnameTbx.Text.Trim();
-                            selected.ClientName = ClientNameTbx.Text.Trim();
-                            selected.ClientMiddleName = ClientMiddleNameTbx.Text.Trim();
-                            selected.CompanyName = CompanyNameTbx.Text.Trim();
-                            selected.INN = INNTbx.Text.Trim();
-                            selected.PhoneNumber = PhoneNumberTbx.Text.Trim();
+                            if (IsValidEmailRegex(EmailTbx.Text))
+                            {
+                                selected.ClientSurname = ClientSurnameTbx.Text.Trim();
+                                selected.ClientName = ClientNameTbx.Text.Trim();
+                                selected.ClientMiddleName = ClientMiddleNameTbx.Text.Trim();
+                                selected.CompanyName = CompanyNameTbx.Text.Trim();
+                                selected.INN = INNTbx.Text.Trim();
+                                selected.PhoneNumber = PhoneNumberTbx.Text.Trim();
+                                selected.Email = EmailTbx.Text.Trim();
+                                context.SaveChanges();
+                                ClientsDG.ItemsSource = context.Clients.ToList();
 
-                            context.SaveChanges();
-                            ClientsDG.ItemsSource = context.Clients.ToList();
-
-                            ClientMiddleNameTbx.Text = "";
-                            ClientNameTbx.Text = "";
-                            ClientSurnameTbx.Text = "";
-                            CompanyNameTbx.Text = "";
-                            INNTbx.Text = "";
-                            PhoneNumberTbx.Text = "";
+                                ClientMiddleNameTbx.Text = "";
+                                ClientNameTbx.Text = "";
+                                ClientSurnameTbx.Text = "";
+                                CompanyNameTbx.Text = "";
+                                INNTbx.Text = "";
+                                PhoneNumberTbx.Text = "";
+                                EmailTbx.Text = "";
+                            }
+                            else
+                            {
+                                MessageBox.Show("Почта введена не верно введён неверно");
+                            }
                         }
                         else
                         {
@@ -196,6 +224,7 @@ namespace slavasRabota
                     CompanyNameTbx.Text = "";
                     INNTbx.Text = "";
                     PhoneNumberTbx.Text = "";
+                    EmailTbx.Text = "";
                 }
                 catch (Exception)
                 {
@@ -217,6 +246,7 @@ namespace slavasRabota
             INNTbx.Text = "";
             PhoneNumberTbx.Text = "";
             ClientsDG.SelectedItem = null;
+            EmailTbx.Text = "";
         }
 
         private void TransportDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -230,7 +260,10 @@ namespace slavasRabota
                 CompanyNameTbx.Text = selected.CompanyName.ToString();
                 INNTbx.Text = selected.INN.ToString();
                 PhoneNumberTbx.Text = selected.PhoneNumber.ToString();
+                EmailTbx.Text = selected.Email.ToString();
             }
         }
+
+        
     }
 }

@@ -18,6 +18,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Spire.Additions.Xps.Schema;
+using static MaterialDesignThemes.Wpf.Theme;
+using MimeKit;
+using MailKit.Net.Smtp;
+using MailKit.Security;
+using System.Xml.Linq;
+using System.Windows.Controls.Primitives;
 
 namespace slavasRabota
 {
@@ -27,15 +34,48 @@ namespace slavasRabota
     public partial class Marshruts : Page
     {
         private LogisTransEntities1 context = new LogisTransEntities1();
+        private const string FromEmail = "awesome.logis@yandex.ru";
+        private const string FromPassword = "guyawwnulpvajvor";
+
         public Marshruts()
         {
             InitializeComponent();
-            MarshrutsDG.ItemsSource = context.Routess.ToList();
-            OrderCB.ItemsSource = context.Orders.ToList();
+            List<Routess> routesses = new List<Routess>();
+            foreach (Routess routess in context.Routess)
+            {
+                if(routess.RouteStatuses.RouteStatus != "Доставлен")
+                {
+                    routesses.Add(routess);
+                }
+            }
+            MarshrutsDG.ItemsSource = routesses;
+            List<Orders> orderss = new List<Orders>();
+            foreach (Orders orders in context.Orders)
+            {
+                if(orders.OrderStatuses.OrderStatus != "Завершён")
+                {
+                    if (orders.OrderStatuses.OrderStatus != "Отменён")
+                    {
+                        if (orders.OrderStatuses.OrderStatus != "Выполняется")
+                        {
+                            orderss.Add(orders);
+                        }
+                    }
+                }
+            }
+            OrderCB.ItemsSource = orderss;
             OrderCB.DisplayMemberPath = "GruzName";
             StatusCB.ItemsSource = context.RouteStatuses.ToList();
             StatusCB.DisplayMemberPath = "RouteStatus";
-            TransportCB.ItemsSource = context.Transport.ToList();
+            List<Transport> trans = new List<Transport>();
+            foreach (var tr in context.Transport)
+            {
+                if (tr.TransportSostoyanie.SostoyanieTransport == "Простаивает")
+                {
+                    trans.Add(tr);
+                }
+            }
+            TransportCB.ItemsSource = trans;
             TransportCB.DisplayMemberPath = "CarNomber";
         }
 
@@ -57,12 +97,44 @@ namespace slavasRabota
                     routes.Protyajonnost = Convert.ToInt32(ProtiajennostTbx.Text.Trim());
                     routes.Transport = TransportCB.SelectedItem as Transport;
                     routes.RouteStatuses = StatusCB.SelectedItem as RouteStatuses;
-
-
+                    routes.Orders.OrderStatus_ID = 2;
+                    routes.Transport.Sostoyanie_ID = 1;
                     context.Routess.Add(routes);
-                    context.SaveChanges();
-                    MarshrutsDG.ItemsSource = context.Routess.ToList();
 
+                    context.SaveChanges();
+                    List<Routess> routesses = new List<Routess>();
+                    foreach (Routess routess in context.Routess)
+                    {
+                        if (routess.RouteStatuses.RouteStatus != "Доставлен")
+                        {
+                            routesses.Add(routess);
+                        }
+                    }
+                    MarshrutsDG.ItemsSource = routesses;
+                    List<Transport> trans = new List<Transport>();
+                    foreach (var tr in context.Transport)
+                    {
+                        if (tr.TransportSostoyanie.SostoyanieTransport == "Простаивает")
+                        {
+                            trans.Add(tr);
+                        }
+                    }
+                    TransportCB.ItemsSource = trans;
+                    List<Orders> orderss = new List<Orders>();
+                    foreach (Orders orders in context.Orders)
+                    {
+                        if (orders.OrderStatuses.OrderStatus != "Завершён")
+                        {
+                            if (orders.OrderStatuses.OrderStatus != "Отменён")
+                            {
+                                if (orders.OrderStatuses.OrderStatus != "Выполняется")
+                                {
+                                    orderss.Add(orders);
+                                }
+                            }
+                        }
+                    }
+                    OrderCB.ItemsSource = orderss;
                     StatusCB.SelectedItem = null;
                     OrderCB.SelectedItem = null;
                     TransportCB.SelectedItem = null;
@@ -100,9 +172,44 @@ namespace slavasRabota
                         {
                             selected.Orders.Storage.ColvoGruzInStorage -= 1;
                             selected.Orders.Storage.DostupMesto += 1;
+                            OpredelenieAsync(selected.Orders);
+                            selected.Orders.OrderStatus_ID = 3;
                         }
+
                         context.SaveChanges();
-                        MarshrutsDG.ItemsSource = context.Routess.ToList();
+                        List<Routess> routesses = new List<Routess>();
+                        foreach (Routess routess in context.Routess)
+                        {
+                            if (routess.RouteStatuses.RouteStatus != "Доставлен")
+                            {
+                                routesses.Add(routess);
+                            }
+                        }
+                        List<Transport> trans = new List<Transport>();
+                        foreach (var tr in context.Transport)
+                        {
+                            if (tr.TransportSostoyanie.SostoyanieTransport == "Простаивает")
+                            {
+                                trans.Add(tr);
+                            }
+                        }
+                        TransportCB.ItemsSource = trans;
+                        List<Orders> orderss = new List<Orders>();
+                        foreach (Orders orders in context.Orders)
+                        {
+                            if (orders.OrderStatuses.OrderStatus != "Завершён")
+                            {
+                                if (orders.OrderStatuses.OrderStatus != "Отменён")
+                                {
+                                    if (orders.OrderStatuses.OrderStatus != "Выполняется")
+                                    {
+                                        orderss.Add(orders);
+                                    }
+                                }
+                            }
+                        }
+                        OrderCB.ItemsSource = orderss;
+                        MarshrutsDG.ItemsSource = routesses;
                         MarshrutsDG.SelectedItem = null;
                         StatusCB.SelectedItem = null;
                         OrderCB.SelectedItem = null;
@@ -137,6 +244,30 @@ namespace slavasRabota
             DostavkaTbx.Text = "";
             OtprovlenieTbx.Text = "";
             ProtiajennostTbx.Text = "";
+            List<Orders> orderss = new List<Orders>();
+            foreach (Orders orders in context.Orders)
+            {
+                if (orders.OrderStatuses.OrderStatus != "Завершён")
+                {
+                    if (orders.OrderStatuses.OrderStatus != "Отменён")
+                    {
+                        if (orders.OrderStatuses.OrderStatus != "Выполняется")
+                        {
+                            orderss.Add(orders);
+                        }
+                    }
+                }
+            }
+            OrderCB.ItemsSource = orderss;
+            List<Transport> trans = new List<Transport>();
+            foreach (var tr in context.Transport)
+            {
+                if (tr.TransportSostoyanie.SostoyanieTransport == "Простаивает")
+                {
+                    trans.Add(tr);
+                }
+            }
+            TransportCB.ItemsSource = trans;
         }
 
         private void MarshrutsDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -154,6 +285,11 @@ namespace slavasRabota
                 {
                     if (ord.ID_Order == selected.Order_ID)
                     {
+                        List<Orders> orrd = new List<Orders>
+                        {
+                            selected.Orders
+                        };
+                        OrderCB.ItemsSource = orrd;
                         OrderCB.SelectedItem = ord;
                     }
                 }
@@ -168,6 +304,11 @@ namespace slavasRabota
                 {
                     if (item.ID_Transport == selected.Transport_ID)
                     {
+                        List<Transport> orrd = new List<Transport>
+                        {
+                            selected.Transport
+                        };
+                        TransportCB.ItemsSource = orrd;
                         TransportCB.SelectedItem = item;
                     }
                 }
@@ -200,8 +341,6 @@ namespace slavasRabota
                 }
                 writer.WriteLine(CenterString(header, lineWidth));
                 writer.WriteLine(new string('-', lineWidth));
-
-
                 var RoutesData = context.Routess
                     .Select(w => new
                     {
@@ -262,6 +401,35 @@ namespace slavasRabota
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при создании PDF: {ex.Message}");
+            }
+        }
+
+       
+        private async Task OpredelenieAsync(Orders order)
+        {
+            string messageBody = $"Ваш заказ доставлен!\n---------------------------------------------------\nГруз: {order.GruzName}\nВес груза: {order.GruzWeight}\n---------------------------------------------------\nСпасибо, что воспользовались нашими услугами";
+
+            try
+            {
+                var message = new MimeMessage(); 
+                message.From.Add(new MailboxAddress("", FromEmail));
+                message.To.Add(new MailboxAddress("", order.Clients.Email.ToString()));
+                message.Subject = "Ваш заказ доставлен!";
+                message.Body = new TextPart("plain") { Text = messageBody };
+
+                using (var client = new SmtpClient())
+                {
+                    await client.ConnectAsync("smtp.yandex.ru", 465, SecureSocketOptions.SslOnConnect);
+                    await client.AuthenticateAsync(FromEmail, FromPassword);
+                    await client.SendAsync(message);
+                    await client.DisconnectAsync(true);
+                }
+
+                MessageBox.Show("Письмо успешно отправлено!", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка отправки почты: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
