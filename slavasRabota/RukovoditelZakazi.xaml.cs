@@ -69,5 +69,10 @@ namespace slavasRabota
         {
             FrameRukovod.Content = new Voditeli();
         }
+
+        private void OtchetPereh_Click(object sender, RoutedEventArgs e)
+        {
+            FrameRukovod.Content = new OtchetPoDohodam();
+        }
     }
 }

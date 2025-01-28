@@ -19,19 +19,26 @@ namespace slavasRabota
     /// </summary>
     public partial class VoditeliOkno : Window
     {
-        private LogisTransEntities1 context = new LogisTransEntities1();    
+        private LogisTransEntities1 context = new LogisTransEntities1();
+        Drivers driv = new Drivers();
         public VoditeliOkno(Drivers driv)
         {
             InitializeComponent();
+            this.driv = driv;
             List<Routess> routesses = new List<Routess>();
             foreach (Routess routess in context.Routess)
             {
                 if(routess.Transport.Driver_ID == driv.ID_Drivers)
                 {
-                    routesses.Add(routess);
+                    if (routess.RouteStatuses.RouteStatus != "Доставлен")
+                    {
+                        routesses.Add(routess);
+                    }
                 }
             }
             MarshrutsDG.ItemsSource = routesses;
+            StatusCB.ItemsSource = context.RouteStatuses.ToList();
+            StatusCB.DisplayMemberPath = "RouteStatus";
         }
 
         private void ExitBtm_Click(object sender, RoutedEventArgs e)
@@ -39,6 +46,46 @@ namespace slavasRabota
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             Close();
+        }
+
+        private void MarshrutsDG_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selected = MarshrutsDG.SelectedItem as Routess;
+            if (selected != null)
+                StatusCB.SelectedItem = selected.RouteStatuses;
+        }
+
+        private void EditBtm_Click(object sender, RoutedEventArgs e)
+        {
+            var selected = MarshrutsDG.SelectedItem as Routess;
+            if (selected != null)
+            {
+                selected.RouteStatuses = StatusCB.SelectedItem as RouteStatuses;
+
+                context.SaveChanges();
+                List<Routess> routesses = new List<Routess>();
+                foreach (Routess routess in context.Routess)
+                {
+                    if (routess.Transport.Driver_ID == driv.ID_Drivers)
+                    {
+                        if (routess.RouteStatuses.RouteStatus != "Доставлен")
+                        {
+                            routesses.Add(routess);
+                        }
+                        else
+                        {
+                            routess.Orders.OrderStatus_ID = 3;
+                        }
+                    }
+                }
+                if(routesses.Count == 0)
+                {
+                    selected.Transport.Sostoyanie_ID = 3;
+                }
+                context.SaveChanges();
+                MarshrutsDG.ItemsSource = routesses ?? new List<Routess>();
+                StatusCB.SelectedItem = null;
+            }
         }
     }
 }

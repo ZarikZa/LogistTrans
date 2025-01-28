@@ -7,7 +7,7 @@
       xmlns:local="clr-namespace:slavasRabota"
       mc:Ignorable="d" 
       d:DesignHeight="850" d:DesignWidth="1500"
-      Title="TransportPage">
+      Title="Транспорты">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
@@ -36,6 +36,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
             <Border CornerRadius="10" Background="#C4C4C4" BorderBrush="#C4C4C4" Height="50" Width="350" Grid.Row="0"  >
                 <TextBox x:Name="CarNomberTbx"  mat:HintAssist.Hint="Номер машины" FontFamily="Times New Roman" FontSize="20" Foreground="White" />
@@ -49,6 +50,7 @@
             <Button x:Name="EditBtm" Content="Изменить" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="10" Height="50" Width="350" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Grid.Row="8" Click="EditBtm_Click" />
             <Button x:Name="DeleteBtm" Content="Удалить" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="10" Height="50" Width="350" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Grid.Row="9" Click="DeleteBtm_Click"  />
             <Button x:Name="bnullBtm" Content="Обнулить поля" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="10" Height="50" Width="350" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Grid.Row="10" Click="bnullBtm_Click" />
+            <Button x:Name="OtchetBtm" Content="Сформировать отчёт" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="10" Height="50" Width="350" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Grid.Row="11" Click="OtchetBtm_Click"/>
         </Grid>
     </Grid>
 </Page>

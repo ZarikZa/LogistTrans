@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Spire.Pdf.Graphics;
+using Spire.Pdf;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -195,6 +199,83 @@ namespace slavasRabota
                         SostoyanieCB.SelectedItem = item;
                     }
                 }
+            }
+        }
+
+        private void OtchetBtm_Click(object sender, RoutedEventArgs e)
+        {
+            TxtForm();
+        }
+
+        private void TxtForm()
+        {
+            string txtFilePath2 = System.IO.Path.Combine("output_1.txt");
+            string pdfFilePath2 = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"Общая загрузка транспорта.pdf");
+            using (FileStream fs = new FileStream(txtFilePath2, FileMode.Create, FileAccess.Write, FileShare.None))
+            using (StreamWriter writer = new StreamWriter(fs, Encoding.UTF8))
+            {
+                string header = "Общая загрузка транспорта";
+                int lineWidth = 70;
+
+                string CenterString(string text, int width)
+                {
+                    if (text.Length >= width) return text;
+                    int padding = (width - text.Length) / 2;
+                    return new string(' ', padding) + text;
+                }
+                writer.WriteLine(CenterString(header, lineWidth));
+                writer.WriteLine(new string('-', lineWidth));
+                var RoutesData = context.Transport
+                    .Select(w => new
+                    {
+                        w.CarNomber,
+                        w.Vmestimost,
+                        Sps = w.TransportSostoyanie.SostoyanieTransport,
+                        DriverName = w.Drivers.DriverName,
+                        DriverSurname = w.Drivers.DriverSurname,
+                        DriverMiddleName = w.Drivers.DriverMiddleName,
+                        DriverLecence = w.Drivers.DriverLecence
+                    }).ToList();
+
+                foreach (var order in RoutesData)
+                {
+                    string FullName = $"{order.DriverName} {order.DriverSurname} {order.DriverMiddleName}";
+                    writer.WriteLine($"{"ФИО водителя:",-10} {FullName}");
+                    writer.WriteLine($"{"Номер автомобиля:",-10} {order.CarNomber}");
+                    writer.WriteLine($"{"Вместимость машины в кг:",-10} {order.Vmestimost}");
+                    writer.WriteLine($"{"Состояние автомобиля:",-10} {order.Sps}");
+                    writer.WriteLine(new string('-', lineWidth));
+                }
+            }
+
+            ConvertTxtToPdf(txtFilePath2, pdfFilePath2);
+            File.Delete(txtFilePath2);
+        }
+
+        public static void ConvertTxtToPdf(string txtFilePath, string pdfFilePath)
+        {
+            try
+            {
+                using (PdfDocument document = new PdfDocument())
+                {
+                    PdfPageBase page = document.Pages.Add();
+                    Font fontt = new Font("Times New Roman", 12f, System.Drawing.FontStyle.Regular, GraphicsUnit.Point);
+                    PdfTrueTypeFont font = new PdfTrueTypeFont(fontt, 12f, true);
+                    PdfStringFormat format = new PdfStringFormat(PdfTextAlignment.Left, PdfVerticalAlignment.Top);
+                    string[] lines = File.ReadAllLines(txtFilePath, Encoding.UTF8);
+                    float y = 20, lineHeight = font.MeasureString("A").Height + 2;
+                    foreach (string line in lines)
+                    {
+                        page.Canvas.DrawString(line, font, PdfBrushes.Black, new PointF(20, y), format);
+                        y += lineHeight;
+                    }
+                    document.SaveToFile(pdfFilePath);
+                    MessageBox.Show($"PDF файл успешно создан: {pdfFilePath}");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при создании PDF: {ex.Message}");
             }
         }
     }

@@ -41,5 +41,10 @@ namespace slavasRabota
             mainWindow.Show();
             Close();
         }
+
+        private void OtchetPereh_Click(object sender, RoutedEventArgs e)
+        {
+            FrameLog.Content = new Otchet();
+        }
     }
 }

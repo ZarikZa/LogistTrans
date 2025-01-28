@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:slavasRabota"
         mc:Ignorable="d"
-        Title="RukovoditelZakazi"
+        Title="Руководитель"
         Background="#3D3D3D"
         WindowState="Maximized"
         Height="850" Width="1500">
@@ -32,6 +32,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Button x:Name="SkladPereh" Content="Склад" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="30" Height="60"  Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Click="SkladPereh_Click" />
             <Button x:Name="RoutesPereh" Grid.Column="1" Content="Маршруты" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="30" Height="60" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Click="RoutesPereh_Click"/>
@@ -40,6 +41,7 @@
             <Button x:Name="ZakaziPereh" Grid.Column="4" Content="Заказы" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="30" Height="60" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Click="ZakaziPereh_Click" />
             <Button x:Name="SotrudPereh" Grid.Column="5" Content="Сотрудники" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="30" Height="60"  Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Click="SotrudPereh_Click" />
             <Button x:Name="VoditeliPereh" Grid.Column="6" Content="Водители" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="30" Height="60" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Click="VoditeliPereh_Click" />
+            <Button x:Name="OtchetPereh" Grid.Column="7" Content="Отчёт по заказам" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="30" Height="60" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Click="OtchetPereh_Click" />
         </Grid>
     </Grid>
 </Window>

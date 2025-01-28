@@ -86,6 +86,27 @@ namespace slavasRabota
             return decimal.TryParse(input, NumberStyles.Any, CultureInfo.InvariantCulture, out _);
         }
 
+        public static bool IsDateNotLessThanToday(string dateString)
+        {
+            try
+            {
+                string dateFormat = "dd.MM.yyyy";
+                if (DateTime.TryParseExact(dateString, dateFormat, null, System.Globalization.DateTimeStyles.None, out DateTime inputDate))
+                {
+                    DateTime today = DateTime.Today;
+                    return inputDate.Date >= today;
+                }
+                else
+                {
+                    return false; 
+                }
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
+
         private void AddBtm_Click(object sender, RoutedEventArgs e)
         {
             Orders orders = new Orders();
@@ -100,47 +121,55 @@ namespace slavasRabota
                         {
                             if (IsDecimal(SumOplatiTbx.Text))
                             {
-                                orders.Clients = ClientCB.SelectedItem as Clients;
-                                orders.GruzName = GruzNameTbx.Text.Trim();
-                                orders.GruzWeight = Convert.ToInt32(GruzWeightTbx.Text.Trim());
-                                orders.DateOtpravki = DateOtpravkiTbx.Text.Trim();
-                                orders.DateDostavki = DateDostavkiTbx.Text.Trim();
-                                orders.OrderStatuses = OrderStatusCB.SelectedItem as OrderStatuses;
-                                orders.SumOplati = Convert.ToDecimal(SumOplatiTbx.Text.Trim());
-                                if ((StorageCB.SelectedItem as Storage).DostupMesto != 0)
+                                if (IsDateNotLessThanToday(DateDostavkiTbx.Text.Trim()) && IsDateNotLessThanToday(DateOtpravkiTbx.Text.Trim()))
                                 {
-                                    orders.Storage = StorageCB.SelectedItem as Storage;
-                                    orders.Storage.DostupMesto -= 1;
-                                    orders.Storage.ColvoGruzInStorage += 1;
+
+                                    orders.Clients = ClientCB.SelectedItem as Clients;
+                                    orders.GruzName = GruzNameTbx.Text.Trim();
+                                    orders.GruzWeight = Convert.ToInt32(GruzWeightTbx.Text.Trim());
+                                    orders.DateOtpravki = DateOtpravkiTbx.Text.Trim();
+                                    orders.DateDostavki = DateDostavkiTbx.Text.Trim();
+                                    orders.OrderStatuses = OrderStatusCB.SelectedItem as OrderStatuses;
+                                    orders.SumOplati = Convert.ToDecimal(SumOplatiTbx.Text.Trim());
+                                    if ((StorageCB.SelectedItem as Storage).DostupMesto != 0)
+                                    {
+                                        orders.Storage = StorageCB.SelectedItem as Storage;
+                                        orders.Storage.DostupMesto -= 1;
+                                        orders.Storage.ColvoGruzInStorage += 1;
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("На выбранном складе не осталось места, невозможно изменить");
+                                    }
+                                    context.Orders.Add(orders);
+                                    context.SaveChanges();
+
+                                    List<Orders> orderss = new List<Orders>();
+                                    foreach (Orders order in context.Orders)
+                                    {
+                                        if (order.OrderStatuses.OrderStatus.ToString() != "Завершён")
+                                        {
+                                            if (order.OrderStatuses.OrderStatus.ToString() != "Отменён")
+                                            {
+                                                orderss.Add(order);
+                                            }
+                                        }
+                                    }
+                                    Zakazs.ItemsSource = orderss;
+
+                                    ClientCB.SelectedItem = null;
+                                    OrderStatusCB.SelectedItem = null;
+                                    StorageCB.SelectedItem = null;
+                                    DateDostavkiTbx.Text = "";
+                                    DateOtpravkiTbx.Text = "";
+                                    GruzNameTbx.Text = "";
+                                    GruzWeightTbx.Text = "";
+                                    SumOplatiTbx.Text = "";
                                 }
                                 else
                                 {
-                                    MessageBox.Show("На выбранном складе не осталось места, невозможно изменить");
+                                    MessageBox.Show("Дата должна быть не в прошлом");
                                 }
-                                context.Orders.Add(orders);
-                                context.SaveChanges();
-
-                                List<Orders> orderss = new List<Orders>();
-                                foreach (Orders order in context.Orders)
-                                {
-                                    if (order.OrderStatuses.OrderStatus.ToString() != "Завершён")
-                                    {
-                                        if (order.OrderStatuses.OrderStatus.ToString() != "Отменён")
-                                        {
-                                            orderss.Add(order);
-                                        }
-                                    }
-                                }
-                                Zakazs.ItemsSource = orderss;
-
-                                ClientCB.SelectedItem = null;
-                                OrderStatusCB.SelectedItem = null;
-                                StorageCB.SelectedItem = null;
-                                DateDostavkiTbx.Text = "";
-                                DateOtpravkiTbx.Text = "";
-                                GruzNameTbx.Text = "";
-                                GruzWeightTbx.Text = "";
-                                SumOplatiTbx.Text = "";
                             }
                             else
                             {
@@ -171,6 +200,15 @@ namespace slavasRabota
         private void bnullBtm_Click(object sender, RoutedEventArgs e)
         {
             ClientCB.SelectedItem = null;
+            List<Storage> storages = new List<Storage>();
+            foreach (var item in context.Storage)
+            {
+                if (item.DostupMesto != 0)
+                {
+                    storages.Add(item);
+                }
+            }
+            StorageCB.ItemsSource = storages;
             OrderStatusCB.SelectedItem = null;
             StorageCB.SelectedItem = null;
             DateDostavkiTbx.Text = "";
@@ -179,6 +217,7 @@ namespace slavasRabota
             GruzWeightTbx.Text = "";
             Zakazs.SelectedItem = null;
             SumOplatiTbx.Text = "";
+
         }
 
         private void EditBtm_Click(object sender, RoutedEventArgs e)
@@ -198,48 +237,63 @@ namespace slavasRabota
                             {
                                 if (IsDecimal(SumOplatiTbx.Text))
                                 {
-                                    selected.Clients = ClientCB.SelectedItem as Clients;
-                                    selected.GruzName = GruzNameTbx.Text.Trim();
-                                    selected.GruzWeight = Convert.ToInt32(GruzWeightTbx.Text.Trim());
-                                    selected.DateOtpravki = DateOtpravkiTbx.Text.Trim();
-                                    selected.DateDostavki = DateDostavkiTbx.Text.Trim();
-                                    selected.OrderStatuses = OrderStatusCB.SelectedItem as OrderStatuses;
-                                    if ((StorageCB.SelectedItem as Storage).DostupMesto != 0)
+                                    if (IsDateNotLessThanToday(DateDostavkiTbx.Text.Trim()) && IsDateNotLessThanToday(DateOtpravkiTbx.Text.Trim()))
                                     {
-                                        selected.Storage.DostupMesto += 1;
-                                        selected.Storage.ColvoGruzInStorage -= 1;
-                                        selected.Storage = StorageCB.SelectedItem as Storage;
-                                        selected.Storage.DostupMesto -= 1;
-                                        selected.Storage.ColvoGruzInStorage += 1;
+                                        selected.Clients = ClientCB.SelectedItem as Clients;
+                                        selected.GruzName = GruzNameTbx.Text.Trim();
+                                        selected.GruzWeight = Convert.ToInt32(GruzWeightTbx.Text.Trim());
+                                        selected.DateOtpravki = DateOtpravkiTbx.Text.Trim();
+                                        selected.DateDostavki = DateDostavkiTbx.Text.Trim();
+                                        selected.OrderStatuses = OrderStatusCB.SelectedItem as OrderStatuses;
+                                        if ((StorageCB.SelectedItem as Storage).DostupMesto != 0)
+                                        {
+                                            selected.Storage.DostupMesto += 1;
+                                            selected.Storage.ColvoGruzInStorage -= 1;
+                                            selected.Storage = StorageCB.SelectedItem as Storage;
+                                            selected.Storage.DostupMesto -= 1;
+                                            selected.Storage.ColvoGruzInStorage += 1;
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("На выбранном складе не осталось места, невозможно изменить");
+                                        }
+                                        selected.SumOplati = Convert.ToDecimal(SumOplatiTbx.Text.Trim());
+
+                                        context.SaveChanges();
+                                        List<Orders> orders = new List<Orders>();
+                                        foreach (Orders order in context.Orders)
+                                        {
+                                            if (order.OrderStatuses.OrderStatus.ToString() != "Завершён")
+                                            {
+                                                if (order.OrderStatuses.OrderStatus.ToString() != "Отменён")
+                                                {
+                                                    orders.Add(order);
+                                                }
+                                            }
+                                        }
+                                        Zakazs.ItemsSource = orders;
+                                        List<Storage> storages = new List<Storage>();
+                                        foreach (var item in context.Storage)
+                                        {
+                                            if (item.DostupMesto != 0)
+                                            {
+                                                storages.Add(item);
+                                            }
+                                        }
+                                        StorageCB.ItemsSource = storages;
+                                        ClientCB.SelectedItem = null;
+                                        OrderStatusCB.SelectedItem = null;
+                                        StorageCB.SelectedItem = null;
+                                        DateDostavkiTbx.Text = "";
+                                        DateOtpravkiTbx.Text = "";
+                                        GruzNameTbx.Text = "";
+                                        GruzWeightTbx.Text = "";
+                                        SumOplatiTbx.Text = "";
                                     }
                                     else
                                     {
-                                        MessageBox.Show("На выбранном складе не осталось места, невозможно изменить");
+                                        MessageBox.Show("Дата должна быть не в прошлом");
                                     }
-                                    selected.SumOplati = Convert.ToDecimal(SumOplatiTbx.Text.Trim());
-                                    
-                                    context.SaveChanges();
-                                    List<Orders> orders = new List<Orders>();
-                                    foreach (Orders order in context.Orders)
-                                    {
-                                        if (order.OrderStatuses.OrderStatus.ToString() != "Завершён")
-                                        {
-                                            if(order.OrderStatuses.OrderStatus.ToString() != "Отменён")
-                                            {
-                                                orders.Add(order);
-                                            }
-                                        }
-                                    }
-                                    Zakazs.ItemsSource = orders;
-
-                                    ClientCB.SelectedItem = null;
-                                    OrderStatusCB.SelectedItem = null;
-                                    StorageCB.SelectedItem = null;
-                                    DateDostavkiTbx.Text = "";
-                                    DateOtpravkiTbx.Text = "";
-                                    GruzNameTbx.Text = "";
-                                    GruzWeightTbx.Text = "";
-                                    SumOplatiTbx.Text = "";
                                 }
                                 else
                                 {
@@ -303,6 +357,11 @@ namespace slavasRabota
                 {
                     if (item.ID_Storage == selected.Storage_ID)
                     {
+                        List<Storage> orrd = new List<Storage>
+                        {
+                            selected.Storage
+                        };
+                        StorageCB.ItemsSource = orrd;
                         StorageCB.SelectedItem = item;
                     }
                 }
@@ -335,7 +394,6 @@ namespace slavasRabota
                 }
                 writer.WriteLine(CenterString(header, lineWidth));
                 writer.WriteLine(new string('-', lineWidth));
-
 
                 var OrdersData = context.Orders
                     .Select(w => new
@@ -404,5 +462,6 @@ namespace slavasRabota
                 MessageBox.Show($"Ошибка при создании PDF: {ex.Message}");
             }
         }
+
     }
 }

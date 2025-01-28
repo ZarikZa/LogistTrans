@@ -18,11 +18,11 @@
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
-            <ColumnDefinition Width="0.1*"/>
+            <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Text="Водитель" Grid.ColumnSpan="2" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Times New Roman" FontSize="48"/>
         <Button x:Name="ExitBtm" Content="Выход" Height="60" FontSize="30" Foreground="White" FontFamily="Times New Roman" Grid.Column="1" Click="ExitBtm_Click"/>
-        <DataGrid x:Name="MarshrutsDG" FontSize="20" Grid.Row="1" Grid.ColumnSpan="2" Background="#B6B6B6" AutoGenerateColumns="False" IsReadOnly="True" >
+        <DataGrid x:Name="MarshrutsDG" FontSize="20" Grid.Row="1" Background="#B6B6B6" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="MarshrutsDG_SelectionChanged" >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Orders.GruzName}" Header="Название груза"/>
                 <DataGridTextColumn Binding="{Binding Orders.GruzWeight}" Header="Вес груза"/>
@@ -36,5 +36,14 @@
                 <DataGridTextColumn Binding="{Binding Orders.SumOplati}" Header="Оплата"/>
             </DataGrid.Columns>
         </DataGrid>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <ComboBox x:Name="StatusCB" mat:HintAssist.Hint="Статус" Width="350" Height="50" Background="#B6B6B6" FontFamily="Times New Roman" FontSize="20" Foreground="White"/>
+            <Button x:Name="EditBtm" Content="Изменить" Foreground="White" FontFamily="Times New Roman" FontSize="20" mat:ButtonAssist.CornerRadius="10" Height="50" Width="350" Style="{StaticResource MaterialDesignFlatButton}" Background="#0DBF40" Grid.Row="2" Click="EditBtm_Click" />
+        </Grid>
     </Grid>
 </Window>

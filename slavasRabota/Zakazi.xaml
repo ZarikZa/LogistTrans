@@ -7,13 +7,13 @@
       xmlns:local="clr-namespace:slavasRabota"
       mc:Ignorable="d" 
       d:DesignHeight="850" d:DesignWidth="1500"
-      Title="Zakazi">
+      Title="Заказы">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        
+
         <DataGrid x:Name="Zakazs" Background="#B6B6B6" AutoGenerateColumns="False" IsReadOnly="True" SelectionChanged="Zakazs_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Clients.CompanyName}" Header="Компания клиента"/>
@@ -67,3 +67,4 @@
         </Grid>
     </Grid>
 </Page>
+    
